@@ -2,25 +2,25 @@ package ru.job4j.oop;
 
 public class Calculator {
 
-    private static int x = 5;
+    private static final int X = 5;
 
     public static int sum(int y) {
-        return x + y;
+        return X + y;
     }
 
-    static int minus(int number) {
-        return number - x;
+    public static int minus(int number) {
+        return number - X;
     }
 
-    double divide(int number) {
-        return (double) number /  x;
+    public double divide(int number) {
+        return (double) number / X;
     }
 
-    int multiply(int number) {
-        return number * x;
+    public int multiply(int number) {
+        return number * X;
     }
 
-    double sumAllOperation(int number) {
+    public double sumAllOperation(int number) {
         return sum(number) + minus(number) + divide(number) + multiply(number);
     }
 
