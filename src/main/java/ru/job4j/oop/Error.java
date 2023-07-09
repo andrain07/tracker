@@ -24,7 +24,7 @@ public class Error {
         outOfMemoryError.showInfo();
     }
 
-    void showInfo() {
+    public void showInfo() {
         System.out.printf("Активность: %b", active);
         System.out.printf("Статус: %d", status);
         System.out.printf("Сообщение: %s", message);
