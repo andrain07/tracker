@@ -17,7 +17,7 @@ public class Tracker {
         Item rsl = null;
         for (int index = 0; index < size; index++) {
             Item item = items[index];
-            if (item.getId() == id) {
+            if (item != null && item.getId() == id) {
                 rsl = item;
                 break;
             }
@@ -67,6 +67,17 @@ public class Tracker {
             int oldItemId = items[oldItemIndex].getId();
             item.setId(oldItemId);
             items[oldItemIndex] = item;
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean delete(int id) {
+        boolean result = false;
+        int deletedItemIndex = indexOf(id);
+        if (deletedItemIndex != -1) {
+            System.arraycopy(items, deletedItemIndex + 1, items, deletedItemIndex, size - deletedItemIndex);
+            items[items.length - 1] = null;
             result = true;
         }
         return result;
