@@ -2,21 +2,10 @@ package ru.job4j.pojo;
 
 public class Library {
     public static void main(String[] args) {
-        Book cleanCode = new Book();
-        cleanCode.setName("Clean code");
-        cleanCode.setPages(150);
-
-        Book javaConcurrency = new Book();
-        javaConcurrency.setName("Java Concurrency");
-        javaConcurrency.setPages(500);
-
-        Book effectiveJava = new Book();
-        effectiveJava.setName("Effective Java");
-        effectiveJava.setPages(600);
-
-        Book headFirstJava = new Book();
-        headFirstJava.setName("Head First Java");
-        headFirstJava.setPages(800);
+        Book cleanCode = new Book("Clean code", 150);
+        Book javaConcurrency = new Book("Java Concurrency", 500);
+        Book effectiveJava = new Book("Effective Java", 600);
+        Book headFirstJava = new Book("Head First Java", 800);
 
         Book[] books = new Book[]{cleanCode, javaConcurrency, effectiveJava, headFirstJava};
         for (int i = 0; i < books.length; i++) {
@@ -32,7 +21,7 @@ public class Library {
         }
 
         for (Book book : books) {
-            if (book.getName().equals("Clean code")) {
+            if ("Clean code".equals(book.getName())) {
                 System.out.println(book.getName());
             }
         }
