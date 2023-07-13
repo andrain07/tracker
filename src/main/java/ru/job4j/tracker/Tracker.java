@@ -66,9 +66,10 @@ public class Tracker {
         int deletedItemIndex = indexOf(id);
         boolean result = deletedItemIndex != -1;
         if (result) {
-            items[size - 1] = null;
             System.arraycopy(items, deletedItemIndex + 1, items, deletedItemIndex,
                     size - deletedItemIndex - 1);
+            items[size - 1] = null;
+            size--;
         }
         return result;
     }
