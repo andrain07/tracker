@@ -12,10 +12,10 @@ public class StartUITest {
         );
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new CreateAction(),
+                new CreateAction(new StubOutput()),
                 new ExitAction(),
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(new StubOutput()).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName()).isEqualTo("Item name");
     }
 
@@ -33,10 +33,10 @@ public class StartUITest {
                 }
         );
         UserAction[] actions = {
-                new ReplaceAction(),
+                new ReplaceAction(new StubOutput()),
                 new ExitAction(),
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(new StubOutput()).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()).getName()).isEqualTo(replacedName);
     }
 
@@ -52,10 +52,27 @@ public class StartUITest {
                 }
         );
         UserAction[] actions = {
-                new DeleteAction(),
+                new DeleteAction(new StubOutput()),
                 new ExitAction(),
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(new StubOutput()).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId())).isNull();
+    }
+
+    @Test
+    public void whenExit() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"0"}
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new ExitAction(),
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString()).isEqualTo(
+                "Menu." + System.lineSeparator()
+                        + "0. Exit" + System.lineSeparator()
+        );
     }
 }
