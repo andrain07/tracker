@@ -14,10 +14,10 @@ public class Matches {
             int matches = Integer.parseInt(input.nextLine());
             if (matches < 1 || matches > 3 || matches > count) {
                 System.out.println("Вы хотите взять недопустимое количество спичек!");
-                continue;
+            } else {
+                turn = !turn;
+                count -= matches;
             }
-            turn = !turn;
-            count -= matches;
             System.out.printf("Осталось спичек: %d%n", count);
         }
         if (!turn) {
