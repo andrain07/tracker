@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FactTest {
     @Test
-    public void WhenFactorial0ThenEx() {
+    public void whenFactorial0ThenEx() {
         Fact fact = new Fact();
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
@@ -16,7 +16,7 @@ class FactTest {
     }
 
     @Test
-    public void WhenFactorial1Then1() {
+    public void whenFactorial1Then1() {
         int num = 1;
         int expected = 1;
         int actual = new Fact().calc(num);
