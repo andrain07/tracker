@@ -63,7 +63,9 @@ public class StringCompareTest {
                 ""
         );
         assertThat(rst).isEqualTo(0);
-    }    @Test
+    }
+
+    @Test
     public void leftHasZeroLengthShouldBeNegative() {
         StringCompare compare = new StringCompare();
         int rst = compare.compare(
