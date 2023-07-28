@@ -14,30 +14,24 @@ public class AppleStore {
     }
 
     public String getLastHappyCustomer() {
-        String lastHappyCustomerName = "";
         Queue<Customer> queue = new LinkedList<>(this.queue);
+        if (queue.size() == 0) {
+            return "";
+        }
         int size = queue.size();
-        for (int i = 0; i < size; i++) {
-            if (i == count - 1) {
-                lastHappyCustomerName = queue.poll().name();
-                break;
-            }
+        for (int i = 0; i < size - 1 && i < count - 1; i++) {
             queue.poll();
         }
-        return lastHappyCustomerName;
+        return queue.poll().name();
     }
 
     public String getFirstUpsetCustomer() {
         String firstUpsetCustomerName = "";
         Queue<Customer> queue = new LinkedList<>(this.queue);
         int size = queue.size();
-        for (int i = 0; i < size; i++) {
-            if (i == count) {
-                firstUpsetCustomerName = queue.poll().name();
-                break;
-            }
+        for (int i = 0; i < size - 1 && i < count; i++) {
             queue.poll();
         }
-        return firstUpsetCustomerName;
+        return queue.poll().name();
     }
 }
