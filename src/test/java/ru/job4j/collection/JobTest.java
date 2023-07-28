@@ -23,7 +23,9 @@ class JobTest {
                 new Job("Fix bug", 1)
         );
         assertThat(actual).isLessThan(0);
-    }    @Test
+    }
+
+    @Test
     public void whenComparatorByPriority() {
         var jobAscByName = new JobAscByPriority();
         int actual = jobAscByName.compare(
