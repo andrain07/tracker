@@ -15,7 +15,6 @@ public class AppleStore {
 
     public String getLastHappyCustomer() {
         Queue<Customer> queue = new LinkedList<>(this.queue);
-        int size = queue.size();
         for (int i = 0; i < count - 1; i++) {
             queue.poll();
         }
