@@ -35,16 +35,11 @@ public class AnalyzeByMap {
     public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
         List<Label> subjectLabels = new ArrayList<>();
         var subjectByTotalScore = new LinkedHashMap<String, Integer>();
+        int subjectScore;
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                if (subjectByTotalScore.containsKey(subject.name())) {
-                    subjectByTotalScore.put(
-                            subject.name(),
-                            subject.score() + subjectByTotalScore.get(subject.name())
-                    );
-                } else {
-                    subjectByTotalScore.put(subject.name(), subject.score());
-                }
+                subjectScore = subjectByTotalScore.getOrDefault(subject.name(), 0);
+                subjectByTotalScore.put(subject.name(), subject.score() + subjectScore);
             }
         }
         for (var stringIntegerEntry : subjectByTotalScore.entrySet()) {
@@ -75,16 +70,11 @@ public class AnalyzeByMap {
     public static Label bestSubject(List<Pupil> pupils) {
         var subjectLabels = new ArrayList<Label>();
         var subjectByTotalScore = new LinkedHashMap<String, Integer>();
+        int subjectScore;
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                if (subjectByTotalScore.containsKey(subject.name())) {
-                    subjectByTotalScore.put(
-                            subject.name(),
-                            subject.score() + subjectByTotalScore.get(subject.name())
-                    );
-                } else {
-                    subjectByTotalScore.put(subject.name(), subject.score());
-                }
+                subjectScore = subjectByTotalScore.getOrDefault(subject.name(), 0);
+                subjectByTotalScore.put(subject.name(), subject.score() + subjectScore);
             }
         }
         for (var subjectByTotalScoreEntry : subjectByTotalScore.entrySet()) {
