@@ -41,9 +41,7 @@ public class AnalyzeByMap {
                         pupil.subjects().stream()
                                 .mapToDouble(Subject::score)
                                 .sum()))
-                .sorted(Comparator.reverseOrder())
-                .limit(1)
-                .findAny()
+                .max(Comparator.naturalOrder())
                 .orElse(null);
     }
 
