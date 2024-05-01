@@ -7,10 +7,10 @@ import ru.job4j.tracker.Tracker;
 
 import java.util.List;
 
-public class FindAll implements UserAction {
+public class FindAllActionAction implements UserAction {
     private final Output out;
 
-    public FindAll(Output out) {
+    public FindAllActionAction(Output out) {
         this.out = out;
     }
 

@@ -7,10 +7,10 @@ import ru.job4j.tracker.Tracker;
 
 import java.util.Objects;
 
-public class FindById implements UserAction {
+public class FindByIdActionAction implements UserAction {
     private final Output out;
 
-    public FindById(Output out) {
+    public FindByIdActionAction(Output out) {
         this.out = out;
     }
 
