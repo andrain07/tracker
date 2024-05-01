@@ -1,91 +1,62 @@
 package ru.job4j.hmap;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnalyzeByMap {
     public static double averageScore(List<Pupil> pupils) {
-        double totalScore = 0;
-        int subjectsCount = 0;
-        for (Pupil pupil : pupils) {
-            subjectsCount += pupil.subjects().size();
-            for (Subject subjects : pupil.subjects()) {
+        return pupils.stream()
+                .flatMap(pupil -> pupil.subjects().stream())
+                .mapToDouble(Subject::score)
+                .average()
+                .orElse(0);
 
-                totalScore += subjects.score();
-            }
-        }
-        return totalScore / subjectsCount;
     }
 
     public static List<Label> averageScoreByPupil(List<Pupil> pupils) {
-        List<Label> pupilLabels = new ArrayList<>();
-        double totalSubjectsScore;
-        for (Pupil pupil : pupils) {
-            totalSubjectsScore = 0;
-            for (Subject subject : pupil.subjects()) {
-                totalSubjectsScore += subject.score();
-            }
-            pupilLabels.add(new Label(pupil.name(), totalSubjectsScore / pupil.subjects().size()));
-        }
-        return pupilLabels;
+        return pupils.stream()
+                .map(pupil -> new Label(
+                        pupil.name(),
+                        pupil.subjects().stream()
+                                .mapToDouble(Subject::score)
+                                .average()
+                                .orElse(0)))
+                .toList();
     }
 
     public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
-        List<Label> subjectLabels = new ArrayList<>();
-        var subjectByTotalScore = new LinkedHashMap<String, Integer>();
-        int subjectScore;
-        for (Pupil pupil : pupils) {
-            for (Subject subject : pupil.subjects()) {
-                subjectScore = subjectByTotalScore.getOrDefault(subject.name(), 0);
-                subjectByTotalScore.put(subject.name(), subject.score() + subjectScore);
-            }
-        }
-        for (var stringIntegerEntry : subjectByTotalScore.entrySet()) {
-            subjectLabels.add(
-                    new Label(
-                            stringIntegerEntry.getKey(),
-                            (double) stringIntegerEntry.getValue() / pupils.size()
-                    )
-            );
-        }
-        return subjectLabels;
+        return pupils.stream()
+                .flatMap(pupil -> pupil.subjects().stream())
+                .collect(Collectors.toMap(Subject::name, Subject::score, Integer::sum))
+                .entrySet().stream()
+                .map(entry -> new Label(entry.getKey(), (double) entry.getValue() / pupils.size()))
+                .toList();
     }
 
     public static Label bestStudent(List<Pupil> pupils) {
-        var pupilLabels = new ArrayList<Label>();
-        double totalScore;
-        for (Pupil pupil : pupils) {
-            totalScore = 0;
-            for (Subject subject : pupil.subjects()) {
-                totalScore += subject.score();
-            }
-            pupilLabels.add(new Label(pupil.name(), totalScore));
-        }
-        pupilLabels.sort(Comparator.naturalOrder());
-        return pupilLabels.get(pupilLabels.size() - 1);
+        return pupils.stream()
+                .map(pupil -> new Label(
+                        pupil.name(),
+                        pupil.subjects().stream()
+                                .mapToDouble(Subject::score)
+                                .sum()))
+                .sorted(Comparator.reverseOrder())
+                .limit(1)
+                .findAny()
+                .orElse(null);
     }
 
     public static Label bestSubject(List<Pupil> pupils) {
-        var subjectLabels = new ArrayList<Label>();
-        var subjectByTotalScore = new LinkedHashMap<String, Integer>();
-        int subjectScore;
-        for (Pupil pupil : pupils) {
-            for (Subject subject : pupil.subjects()) {
-                subjectScore = subjectByTotalScore.getOrDefault(subject.name(), 0);
-                subjectByTotalScore.put(subject.name(), subject.score() + subjectScore);
-            }
-        }
-        for (var subjectByTotalScoreEntry : subjectByTotalScore.entrySet()) {
-            subjectLabels.add(
-                    new Label(
-                            subjectByTotalScoreEntry.getKey(),
-                            subjectByTotalScoreEntry.getValue()
-                    )
-            );
-        }
-        subjectLabels.sort(Comparator.naturalOrder());
-        return subjectLabels.get(subjectLabels.size() - 1);
+        return pupils.stream()
+                .flatMap(pupil -> pupil.subjects().stream())
+                .collect(Collectors.toMap(
+                        Subject::name,
+                        Subject::score,
+                        Integer::sum))
+                .entrySet().stream()
+                .map(entry -> new Label(entry.getKey(), entry.getValue()))
+                .max(Comparator.comparingDouble(Label::score))
+                .orElse(null);
     }
 }
